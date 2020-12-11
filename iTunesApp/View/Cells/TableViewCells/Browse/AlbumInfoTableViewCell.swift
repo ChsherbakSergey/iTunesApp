@@ -90,7 +90,7 @@ class AlbumInfoTableViewCell: UITableViewCell {
         //Frame of the albumNameLabel
         albumNameLabel.frame = CGRect(x: 20, y: 15, width: contentView.width - 40, height: 20)
         //Frame of the artistNameLabel
-        artistNameButton.frame = CGRect(x: 20, y: albumNameLabel.bottom + 10, width: contentView.width - 40, height: 20)
+        artistNameButton.frame = CGRect(x: contentView.width / 2 - 100, y: albumNameLabel.bottom + 10, width: 200, height: 20)
         //Frame of the genreAndYearLabel
         genreAndYearLabel.frame = CGRect(x: 20, y: artistNameButton.bottom + 10, width: contentView.width - 40, height: 15)
         //Frame of the play and shuffle buttons
@@ -99,7 +99,7 @@ class AlbumInfoTableViewCell: UITableViewCell {
         shuffleButton.frame = CGRect(x: playButton.right + 20, y: genreAndYearLabel.bottom + 15, width: contentView.width / 2 - 30, height: 50)
         shuffleButton.layer.cornerRadius = 10
         //Frame of the line view
-        lineView.frame = CGRect(x: 20, y: contentView.bottom - 0.25, width: contentView.width - 10, height: 0.25)
+        lineView.frame = CGRect(x: 20, y: contentView.bottom - 0.25, width: contentView.width - 10, height: 0.5)
     }
     
     override func prepareForReuse() {
@@ -113,6 +113,8 @@ class AlbumInfoTableViewCell: UITableViewCell {
     //MARK: - Configure View
     ///Sets initial UI
     private func setInitialUI() {
+        //When user tap on the cell it won't show the selectable animation
+        selectionStyle = .none
         //Adding subviews
         contentView.addSubview(albumNameLabel)
         contentView.addSubview(artistNameButton)

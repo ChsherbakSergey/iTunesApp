@@ -19,7 +19,6 @@ class DetailAlbumViewController: UIViewController {
         tableView.register(AlbumInfoTableViewCell.self, forCellReuseIdentifier: AlbumInfoTableViewCell.identifier)
         tableView.register(ListOfSongsTableViewCell.self, forCellReuseIdentifier: ListOfSongsTableViewCell.identifier)
         tableView.register(TrackCopyrightTableViewCell.self, forCellReuseIdentifier: TrackCopyrightTableViewCell.identifier)
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         return tableView
     }()
     
@@ -36,6 +35,8 @@ class DetailAlbumViewController: UIViewController {
     var genreAndYear = ""
     var artistName = ""
     var artistViewUrl = ""
+    //Array for tracks that the user wants to add in their library
+    var arrayOfAddedTracks : [Track] = []
     
     //MARK: - Life Cycle
     override func viewDidLoad() {
@@ -60,7 +61,6 @@ class DetailAlbumViewController: UIViewController {
         tableView.frame = view.bounds
     }
     
-    
     //MARK: - Configure View
     
     ///Configures initial UI
@@ -81,7 +81,6 @@ class DetailAlbumViewController: UIViewController {
     
 }
 
-
 //MARK: - UITableViewDelegate and UITableViewDataSource Implementation
 
 extension DetailAlbumViewController: UITableViewDelegate, UITableViewDataSource {
@@ -100,6 +99,8 @@ extension DetailAlbumViewController: UITableViewDelegate, UITableViewDataSource 
         }
         else if indexPath.row < tracks.count + 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: ListOfSongsTableViewCell.identifier, for: indexPath) as! ListOfSongsTableViewCell
+            cell.delegate = self
+            cell.numberOfTrack = indexPath.row
             cell.configureCell(with: model[indexPath.row - 1], numberOfSong: indexPath.row)
             return cell
         }
@@ -127,9 +128,7 @@ extension DetailAlbumViewController: UITableViewDelegate, UITableViewDataSource 
             vc.numberOfTrack = model[position].trackNumber
             print(model[position].trackNumber)
             present(vc, animated: true, completion: nil)
-            
         }
-
 
     }
     
@@ -180,6 +179,40 @@ extension DetailAlbumViewController: AlbumInfoTableViewCellDelegate {
         }
         let vc = SFSafariViewController(url: url)
         present(vc, animated: true)
+    }
+    
+}
+
+//MARK: - ListOfSongsTableViewCellDelegate Implementation
+
+extension DetailAlbumViewController: ListOfSongsTableViewCellDelegate {
+    
+    func didTapAddTrack(addedAlready: Bool, numberOfTrack: Int) {
+        if addedAlready == false {
+            ActionSheets.createAnAlertWhenDidTapAddedTrackButton(on: self, with: "Do you really want to delete?", message: "After deleting this track it will no be longer in your library")
+        } else {
+            print("Added")
+            let newTrack = tracks[numberOfTrack - 1]
+            arrayOfAddedTracks.append(newTrack)
+            let array = arrayOfAddedTracks
+            print(array.count)
+            
+            do {
+                //Json Encoder
+                let encoder = JSONEncoder()
+                //Encode Tracks
+                let data = try encoder.encode(array)
+                //Write data to UserDefaults
+                UserDefaults.standard.setValue(data, forKey: "SavedTracks")
+            } catch {
+                print("Unable to encode, error: \(error)")
+            }
+            
+            
+            
+            
+        }
+
     }
     
 }

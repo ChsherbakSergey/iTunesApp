@@ -235,10 +235,12 @@ class PlayerViewController: UIViewController {
             let configuration = UIImage.SymbolConfiguration(pointSize: 30, weight: .thin)
             let image = UIImage(systemName: "play.fill", withConfiguration: configuration)
             playAndPauseButton.setImage(image, for: .normal)
+            //shrink cover image
         } else {
             player?.play()
             isPaused = false
             setPlayAndPauseButtonWhenHitBackwardOrForward()
+            //increase image size
         }
     }
     

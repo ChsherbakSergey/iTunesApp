@@ -36,7 +36,9 @@ final class JSONHandler {
                 return
             }
             do {
-                let result = try JSONSerialization.jsonObject(with: data, options: [.allowFragments]) as! [String: Any]
+                guard let result = try JSONSerialization.jsonObject(with: data, options: [.allowFragments]) as? [String: Any] else {
+                    return
+                }
                 if let albumsResults = result["results"] as? NSArray {
                     for album in albumsResults {
                         if let albumInfo = album as? [String: AnyObject] {
@@ -81,7 +83,9 @@ final class JSONHandler {
                 return
             }
             do {
-                let result = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
+                guard let result = try JSONSerialization.jsonObject(with: data, options: [.allowFragments]) as? [String: Any] else {
+                    return
+                }
                 if let trackResults = result["results"] as? NSArray {
                     for song in trackResults {
                         // 0 element is album info

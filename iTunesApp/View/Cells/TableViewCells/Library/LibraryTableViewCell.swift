@@ -14,13 +14,13 @@ class LibraryTableViewCell: UITableViewCell {
     static let identifier = "LibraryTableViewCell"
     
     //MARK: - Views that will be displayed on this cell
-    private let coverImageView : UIImageView = {
+    public let coverImageView : UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
         return imageView
     }()
     
-    private let trackNameLabel : UILabel = {
+    public let trackNameLabel : UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
         label.adjustsFontSizeToFitWidth = true
@@ -30,7 +30,7 @@ class LibraryTableViewCell: UITableViewCell {
         return label
     }()
     
-    private let artistNameLabel : UILabel = {
+    public let artistNameLabel : UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
         label.adjustsFontSizeToFitWidth = true
@@ -78,10 +78,10 @@ class LibraryTableViewCell: UITableViewCell {
         contentView.addSubview(artistNameLabel)
     }
     
-    public func configureCell() {
-        coverImageView.image = UIImage(systemName: "person")
-        trackNameLabel.text = "Track Name"
-        artistNameLabel.text = "Artist Name"
+    public func configureCell(with model: Track) {
+        coverImageView.sd_setImage(with: URL(string: model.artworkUrl100), completed: nil)
+        trackNameLabel.text = model.trackName
+        artistNameLabel.text = model.artistName
     }
     
 }

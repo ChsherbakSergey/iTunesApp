@@ -56,9 +56,15 @@ class AlbumsSearchController: UIViewController {
         configureCollectionView()
         setDelegates()
         setInitialUI()
-        JSONHandler.shared.getAlbums(query: "eminem", completion: { [weak self] albums in
-                let newAlbums = albums.sorted(by: {$0 < $1})
-                self?.albums.append(contentsOf: newAlbums)
+        //By default the app going to show Eminem's albums when it launches
+        //Sort albums alphabetically and then delete all the elements that are the same because API does provide same elements several times sometimes
+        JSONHandler.shared.getAlbums(query: "50 cent", completion: { [weak self] albums in
+            self?.albums = albums.sorted(by: {$0.collectionName < $1.collectionName})
+            for (index, element) in albums.enumerated().reversed() {
+                if albums.filter({ $0 == element}).count > 1 {
+                    self?.albums.remove(at: index)
+                }
+            }
             DispatchQueue.main.async {
                 self?.collectionView?.reloadData()
             }
@@ -161,17 +167,23 @@ extension AlbumsSearchController: UICollectionViewDelegate, UICollectionViewData
 extension AlbumsSearchController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        //Firstly delete all the existing albums and then add and show albums that has been found or if the searchText doesn't exist then show noResults
-        albums.removeAll()
+        //add and show albums that has been found or if the searchText doesn't exist then show noResults
         if searchBar.text != nil || searchBar.text == "" {
             guard let searchText = searchBar.text else {
                 return
             }
-            JSONHandler.shared.getAlbums(query: searchText, completion: { [weak self] requestedAlbums in
+            JSONHandler.shared.getAlbums(query: searchText.lowercased(), completion: { [weak self] requestedAlbums in
                 guard let strongSelf = self else {
                     return
                 }
+                print(requestedAlbums)
+                //Sort albums alphabetically and then delete all the elements that are the same because API does provide same elements several times sometimes
                 strongSelf.albums = requestedAlbums.sorted(by: {$0.collectionName < $1.collectionName})
+                for (index, element) in strongSelf.albums.enumerated().reversed() {
+                    if strongSelf.albums.filter({ $0 == element}).count > 1 {
+                        strongSelf.albums.remove(at: index)
+                    }
+                }
                 DispatchQueue.main.async {
                     if strongSelf.albums == [] {
                         strongSelf.collectionView?.isHidden = true
@@ -192,17 +204,29 @@ extension AlbumsSearchController: UISearchBarDelegate {
     
     //If the user clicks the cancel button we must show them what was on the screen before they started to search
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        albums.removeAll()
-        JSONHandler.shared.getAlbums(query: lastSearch, completion: { [weak self] requestedAlbums in
-            guard let strrongSelf = self else {
-                return
-            }
-            strrongSelf.albums = requestedAlbums.sorted(by: {$0.collectionName < $1.collectionName})
-            DispatchQueue.main.async {
-                strrongSelf.collectionView?.reloadData()
-            }
-        })
-        searchBar.resignFirstResponder()
+        if lastSearch == "" {
+            JSONHandler.shared.getAlbums(query: "zyan", completion: { [weak self] requestedAlbums in
+                guard let strrongSelf = self else {
+                    return
+                }
+                strrongSelf.albums = requestedAlbums.sorted(by: {$0.collectionName < $1.collectionName})
+                DispatchQueue.main.async {
+                    strrongSelf.collectionView?.reloadData()
+                }
+            })
+            searchBar.resignFirstResponder()
+        } else {
+            JSONHandler.shared.getAlbums(query: lastSearch, completion: { [weak self] requestedAlbums in
+                guard let strrongSelf = self else {
+                    return
+                }
+                strrongSelf.albums = requestedAlbums.sorted(by: {$0.collectionName < $1.collectionName})
+                DispatchQueue.main.async {
+                    strrongSelf.collectionView?.reloadData()
+                }
+            })
+            searchBar.resignFirstResponder()
+        }
     }
     
 }

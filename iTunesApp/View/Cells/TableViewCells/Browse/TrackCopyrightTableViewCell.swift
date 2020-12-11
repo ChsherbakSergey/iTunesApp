@@ -51,7 +51,7 @@ class TrackCopyrightTableViewCell: UITableViewCell {
         super.layoutSubviews()
         numberOfSongsLabel.frame = CGRect(x: 20, y: 5, width: contentView.width - 40, height: 20)
         copyrightLabel.frame = CGRect(x: 20, y: numberOfSongsLabel.bottom + 5, width: contentView.width - 40, height: 15)
-        lineView.frame = CGRect(x: 20, y: contentView.bottom - 0.25, width: contentView.width - 10, height: 0.25)
+        lineView.frame = CGRect(x: 20, y: contentView.bottom - 0.25, width: contentView.width - 10, height: 0.5)
     }
     
     override func prepareForReuse() {
@@ -63,6 +63,9 @@ class TrackCopyrightTableViewCell: UITableViewCell {
     
     //MARK: - Configure View
     private func setInitialUI() {
+        //When user tap on the cell it won't show the selectable animation
+        selectionStyle = .none
+        //Adding subviews
         contentView.addSubview(numberOfSongsLabel)
         contentView.addSubview(copyrightLabel)
         contentView.addSubview(lineView)

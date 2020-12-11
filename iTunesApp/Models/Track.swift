@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Track {
+struct Track : Codable {
     
     let trackName: String
     let trackNumber: Int
