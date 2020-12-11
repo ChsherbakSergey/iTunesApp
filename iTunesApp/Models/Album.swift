@@ -19,6 +19,7 @@ struct Album: Comparable {
     let releaseDate: String
     let copyright: String
     let trackCount: Int
+    let artistViewUrl: String
     
     static func ==(lhs: Album, rhs: Album) -> Bool {
         return lhs.collectionName == rhs.collectionName

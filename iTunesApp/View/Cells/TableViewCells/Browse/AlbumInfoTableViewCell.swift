@@ -9,6 +9,8 @@ import UIKit
 
 protocol AlbumInfoTableViewCellDelegate: AnyObject {
     func didTapPlayMusicButton()
+    func didTapShuffleButton()
+    func didTapArtistNameButton()
 }
 
 class AlbumInfoTableViewCell: UITableViewCell {
@@ -31,13 +33,12 @@ class AlbumInfoTableViewCell: UITableViewCell {
         return label
     }()
     
-    private let artistNameLabel : UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 18, weight: .semibold)
-        label.textColor = .systemPink
-        label.textAlignment = .center
-        label.numberOfLines = 1
-        return label
+    private let artistNameButton : UIButton = {
+        let button = UIButton()
+        button.setTitleColor(.systemPink, for: .normal)
+        button.titleLabel?.textAlignment = .center
+        button.titleLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
+        return button
     }()
     
     private let genreAndYearLabel : UILabel = {
@@ -89,9 +90,9 @@ class AlbumInfoTableViewCell: UITableViewCell {
         //Frame of the albumNameLabel
         albumNameLabel.frame = CGRect(x: 20, y: 15, width: contentView.width - 40, height: 20)
         //Frame of the artistNameLabel
-        artistNameLabel.frame = CGRect(x: 20, y: albumNameLabel.bottom + 10, width: contentView.width - 40, height: 20)
+        artistNameButton.frame = CGRect(x: 20, y: albumNameLabel.bottom + 10, width: contentView.width - 40, height: 20)
         //Frame of the genreAndYearLabel
-        genreAndYearLabel.frame = CGRect(x: 20, y: artistNameLabel.bottom + 10, width: contentView.width - 40, height: 15)
+        genreAndYearLabel.frame = CGRect(x: 20, y: artistNameButton.bottom + 10, width: contentView.width - 40, height: 15)
         //Frame of the play and shuffle buttons
         playButton.frame = CGRect(x: 20, y: genreAndYearLabel.bottom + 15, width: contentView.width / 2 - 30, height: 50)
         playButton.layer.cornerRadius = 10
@@ -104,7 +105,7 @@ class AlbumInfoTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         albumNameLabel.text = nil
-        artistNameLabel.text = nil
+        artistNameButton.setTitle(nil, for: .normal)
         genreAndYearLabel.text = nil
         lineView.backgroundColor = nil
     }
@@ -114,7 +115,7 @@ class AlbumInfoTableViewCell: UITableViewCell {
     private func setInitialUI() {
         //Adding subviews
         contentView.addSubview(albumNameLabel)
-        contentView.addSubview(artistNameLabel)
+        contentView.addSubview(artistNameButton)
         contentView.addSubview(genreAndYearLabel)
         contentView.addSubview(playButton)
         contentView.addSubview(shuffleButton)
@@ -123,7 +124,7 @@ class AlbumInfoTableViewCell: UITableViewCell {
     
     public func configureCell(collectionName: String, artistName: String, genreAndYear: String) {
         albumNameLabel.text = collectionName
-        artistNameLabel.text = artistName
+        artistNameButton.setTitle(artistName, for: .normal)
         genreAndYearLabel.text = genreAndYear
         lineView.backgroundColor = .systemGray
     }
@@ -131,10 +132,20 @@ class AlbumInfoTableViewCell: UITableViewCell {
     ///Sets targets to buttons
     private func setTargetsToButtons() {
         playButton.addTarget(self, action: #selector(didTapPlayButton), for: .touchUpInside)
+        shuffleButton.addTarget(self, action: #selector(didTapShuffleButton), for: .touchUpInside)
+        artistNameButton.addTarget(self, action: #selector(didTapArtistNameButton), for: .touchUpInside)
     }
     
-    @objc private func didTapPlayButton(on viewController: UIViewController) {
+    @objc private func didTapPlayButton() {
         delegate?.didTapPlayMusicButton()
+    }
+    
+    @objc private func didTapShuffleButton() {
+        delegate?.didTapShuffleButton()
+    }
+    
+    @objc private func didTapArtistNameButton() {
+        delegate?.didTapArtistNameButton()
     }
     
 }

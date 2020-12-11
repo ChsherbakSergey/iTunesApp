@@ -7,6 +7,7 @@
 
 import UIKit
 import SDWebImage
+import SafariServices
 
 class DetailAlbumViewController: UIViewController {
 
@@ -34,6 +35,7 @@ class DetailAlbumViewController: UIViewController {
     var trackName = ""
     var genreAndYear = ""
     var artistName = ""
+    var artistViewUrl = ""
     
     //MARK: - Life Cycle
     override func viewDidLoad() {
@@ -145,6 +147,18 @@ extension DetailAlbumViewController: UITableViewDelegate, UITableViewDataSource 
 
 extension DetailAlbumViewController: AlbumInfoTableViewCellDelegate {
     
+    ///Start playing the album with a random song in it
+    func didTapShuffleButton() {
+        let randomNumber = Int.random(in: 0..<trackCount)
+        let vc = PlayerViewController()
+        vc.previewURL = tracks[randomNumber].previewUrl
+        vc.track = tracks[randomNumber]
+        vc.tracks = tracks
+        vc.numberOfTrack = tracks[randomNumber].trackNumber
+        present(vc, animated: true, completion: nil)
+    }
+    
+    ///Start playing the album from the beginning
     func didTapPlayMusicButton() {
         let vc = PlayerViewController()
         vc.previewURL = tracks[0].previewUrl
@@ -152,6 +166,20 @@ extension DetailAlbumViewController: AlbumInfoTableViewCellDelegate {
         vc.tracks = tracks
         vc.numberOfTrack = tracks[0].trackNumber
         present(vc, animated: true, completion: nil)
+    }
+    
+    ///Opens Safari Vc with information about the artist
+    func didTapArtistNameButton() {
+        presentSafariVC(with: artistViewUrl)
+    }
+    
+    ///Presents Safari VC to be able to see anything with a provided url
+    private func presentSafariVC(with url: String) {
+        guard let url = URL(string: url) else {
+            return
+        }
+        let vc = SFSafariViewController(url: url)
+        present(vc, animated: true)
     }
     
 }

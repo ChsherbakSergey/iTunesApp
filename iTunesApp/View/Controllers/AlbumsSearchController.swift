@@ -22,10 +22,33 @@ class AlbumsSearchController: UIViewController {
         return searchController
     }()
     
+    private let noResultsLabel : UILabel = {
+        let label = UILabel()
+        label.text = "No Results"
+        label.font = .systemFont(ofSize: 20, weight: .semibold)
+        label.numberOfLines = 1
+        label.textColor = .label
+        label.textAlignment = .center
+        label.isHidden = true
+        return label
+    }()
+    
+    private let tryANewSearchLabel : UILabel = {
+        let label = UILabel()
+        label.text = "Try a new search"
+        label.font = .systemFont(ofSize: 18, weight: .regular)
+        label.numberOfLines = 1
+        label.textColor = .systemGray
+        label.textAlignment = .center
+        label.isHidden = true
+        return label
+    }()
+    
     //MARK: - Constants and Variables
     var albums : [Album] = []
-    var filteredAlbums : [Album] = []
-    var isFiltered = false
+    var lastSearch = ""
+//    var filteredAlbums : [Album] = []
+//    var isFiltered = false
 
     //MARK: - Life Cycle
     override func viewDidLoad() {
@@ -33,7 +56,7 @@ class AlbumsSearchController: UIViewController {
         configureCollectionView()
         setDelegates()
         setInitialUI()
-        JSONHandler.shared.getAlbums(query: "okay", completion: { [weak self] albums in
+        JSONHandler.shared.getAlbums(query: "eminem", completion: { [weak self] albums in
                 let newAlbums = albums.sorted(by: {$0 < $1})
                 self?.albums.append(contentsOf: newAlbums)
             DispatchQueue.main.async {
@@ -47,6 +70,9 @@ class AlbumsSearchController: UIViewController {
         super.viewDidLayoutSubviews()
         //Frame of the collectionView
         collectionView?.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height)
+        //Frames of the NoResult and tryANewSearch Labels
+        noResultsLabel.frame = CGRect(x: 20, y: view.height / 2 - 20, width: view.width - 40, height: 30)
+        tryANewSearchLabel.frame = CGRect(x: 20, y: noResultsLabel.bottom, width: view.width - 40, height: 30)
     }
     
     //MARK: - Functions
@@ -61,6 +87,8 @@ class AlbumsSearchController: UIViewController {
             return
         }
         view.addSubview(collectionView)
+        view.addSubview(noResultsLabel)
+        view.addSubview(tryANewSearchLabel)
     }
     
     ///Sets Delegates
@@ -117,11 +145,11 @@ extension AlbumsSearchController: UICollectionViewDelegate, UICollectionViewData
         vc.artistName = model.artistName
         vc.copyright = model.copyright
         vc.trackCount = model.trackCount
+        vc.artistViewUrl = model.artistViewUrl
         navigationController?.pushViewController(vc, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(width: view.width/2 - 20, height: view.height/4)
         return CGSize(width: view.width/2 - 20, height: 230)
     }
     
@@ -133,15 +161,48 @@ extension AlbumsSearchController: UICollectionViewDelegate, UICollectionViewData
 extension AlbumsSearchController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        //Firstly delete all the existing albums and then add and show albums that has been found or if the searchText doesn't exist then show noResults
+        albums.removeAll()
         if searchBar.text != nil || searchBar.text == "" {
-            JSONHandler.shared.getAlbums(query: searchBar.text!, completion: { [weak self] requestedAlbums in
-                self?.albums = requestedAlbums.sorted(by: {$0.collectionName < $1.collectionName})
+            guard let searchText = searchBar.text else {
+                return
+            }
+            JSONHandler.shared.getAlbums(query: searchText, completion: { [weak self] requestedAlbums in
+                guard let strongSelf = self else {
+                    return
+                }
+                strongSelf.albums = requestedAlbums.sorted(by: {$0.collectionName < $1.collectionName})
                 DispatchQueue.main.async {
-                    self?.collectionView!.reloadData()
+                    if strongSelf.albums == [] {
+                        strongSelf.collectionView?.isHidden = true
+                        strongSelf.noResultsLabel.isHidden = false
+                        strongSelf.tryANewSearchLabel.isHidden = false
+                    } else {
+                        strongSelf.collectionView!.reloadData()
+                        strongSelf.noResultsLabel.isHidden = true
+                        strongSelf.tryANewSearchLabel.isHidden = true
+                        strongSelf.collectionView?.isHidden = false
+                    }
                 }
             })
             searchBar.resignFirstResponder()
+            lastSearch = searchText
         }
+    }
+    
+    //If the user clicks the cancel button we must show them what was on the screen before they started to search
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        albums.removeAll()
+        JSONHandler.shared.getAlbums(query: lastSearch, completion: { [weak self] requestedAlbums in
+            guard let strrongSelf = self else {
+                return
+            }
+            strrongSelf.albums = requestedAlbums.sorted(by: {$0.collectionName < $1.collectionName})
+            DispatchQueue.main.async {
+                strrongSelf.collectionView?.reloadData()
+            }
+        })
+        searchBar.resignFirstResponder()
     }
     
 }

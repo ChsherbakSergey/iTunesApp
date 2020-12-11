@@ -50,8 +50,9 @@ final class JSONHandler {
                             guard let releaseDate = albumInfo["releaseDate"] as? String else {return}
                             guard let copyright = albumInfo["copyright"] as? String else {return}
                             guard let trackCount = albumInfo["trackCount"] as? Int else {return}
+                            guard let artistViewUrl = albumInfo["artistViewUrl"] as? String else {return}
                             let releaseDateFormatted = releaseDate.prefix(4)
-                            let albumInstance = Album(artistName: artistName, artworkUrl100: artworkUrl100, artworkUrl60: artworkUrl60, collectionId: collectionId, collectionName: collectionName, country: country, primaryGenreName: primaryGenreName, releaseDate: String(releaseDateFormatted), copyright: copyright, trackCount: trackCount)
+                            let albumInstance = Album(artistName: artistName, artworkUrl100: artworkUrl100, artworkUrl60: artworkUrl60, collectionId: collectionId, collectionName: collectionName, country: country, primaryGenreName: primaryGenreName, releaseDate: String(releaseDateFormatted), copyright: copyright, trackCount: trackCount, artistViewUrl: artistViewUrl)
                             albums.append(albumInstance)
                         }
                     }
