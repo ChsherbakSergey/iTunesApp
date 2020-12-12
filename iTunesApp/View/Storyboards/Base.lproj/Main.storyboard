@@ -22,7 +22,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="987" y="1487"/>
+            <point key="canvasLocation" x="912" y="1487"/>
         </scene>
         <!--Library-->
         <scene sceneID="GFh-ab-Xms">
@@ -38,7 +38,23 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ouj-ll-5s9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2219" y="1487"/>
+            <point key="canvasLocation" x="1623" y="1487"/>
+        </scene>
+        <!--Settings-->
+        <scene sceneID="Mld-Vo-kBr">
+            <objects>
+                <viewController id="POY-vR-kgO" customClass="SettingsViewController" customModule="iTunesApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fAW-me-bDf">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="Lmv-og-4jo"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Settings" id="cWZ-v9-hfd"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bSF-3n-j3M" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2326" y="1487"/>
         </scene>
         <!--Browse-->
         <scene sceneID="Exv-K1-INw">
@@ -58,7 +74,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MnP-3Z-xHI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="987" y="807"/>
+            <point key="canvasLocation" x="913" y="807"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="xjv-IR-MAe">
@@ -74,6 +90,7 @@
                     <connections>
                         <segue destination="TfU-Fu-fvQ" kind="relationship" relationship="viewControllers" id="fhe-q1-PE5"/>
                         <segue destination="wNf-Ta-eYm" kind="relationship" relationship="viewControllers" id="hDA-Wf-baU"/>
+                        <segue destination="8ti-eJ-iyf" kind="relationship" relationship="viewControllers" id="GBk-2y-die"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k1E-ea-abC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -98,10 +115,31 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RrD-4s-DXM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2219" y="807"/>
+            <point key="canvasLocation" x="1623" y="807"/>
+        </scene>
+        <!--Settings-->
+        <scene sceneID="g0a-md-Qek">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8ti-eJ-iyf" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Settings" image="gearshape.fill" catalog="system" id="cPQ-Ko-zJ8"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="AbC-Fm-0Tf">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" systemColor="systemPinkColor"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="POY-vR-kgO" kind="relationship" relationship="rootViewController" id="TBW-b6-98Q"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HJ0-bP-GqO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2325" y="807"/>
         </scene>
     </scenes>
     <resources>
+        <image name="gearshape.fill" catalog="system" width="128" height="121"/>
         <image name="music.note.house.fill" catalog="system" width="128" height="106"/>
         <image name="square.grid.2x2.fill" catalog="system" width="128" height="114"/>
         <systemColor name="systemBackgroundColor">
