@@ -14,13 +14,13 @@ class LibraryTableViewCell: UITableViewCell {
     static let identifier = "LibraryTableViewCell"
     
     //MARK: - Views that will be displayed on this cell
-    public let coverImageView : UIImageView = {
+    private let coverImageView : UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
         return imageView
     }()
     
-    public let trackNameLabel : UILabel = {
+    private let trackNameLabel : UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
         label.adjustsFontSizeToFitWidth = true
@@ -30,7 +30,7 @@ class LibraryTableViewCell: UITableViewCell {
         return label
     }()
     
-    public let artistNameLabel : UILabel = {
+    private let artistNameLabel : UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
         label.adjustsFontSizeToFitWidth = true
@@ -39,6 +39,12 @@ class LibraryTableViewCell: UITableViewCell {
         label.textColor = .systemGray
         return label
     }()
+    
+//    private let lineView : UIView = {
+//        let view = UIView()
+//        view.backgroundColor = .systemGray
+//        return view
+//    }()
     
     //MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -54,11 +60,14 @@ class LibraryTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         //Frame of the cover imageView
-        coverImageView.frame = CGRect(x: 20, y: 2, width: 46, height: 46)
+        coverImageView.frame = CGRect(x: 20, y: 4, width: 46, height: 46)
+        coverImageView.layer.cornerRadius = 2
         //Frame of the trackName Label
         trackNameLabel.frame = CGRect(x: coverImageView.right + 5, y: 0, width: contentView.width - 71, height: contentView.height / 2)
         //Frame of the artistName Label
         artistNameLabel.frame = CGRect(x: coverImageView.right + 5, y: contentView.height / 2, width: contentView.width - 71, height: contentView.height / 2)
+        //Frame of the line
+//        lineView.frame = CGRect(x: 0, y: contentView.bottom - 0.25, width: contentView.width, height: 0.25)
     }
     
     override func prepareForReuse() {
@@ -66,6 +75,7 @@ class LibraryTableViewCell: UITableViewCell {
         coverImageView.image = nil
         trackNameLabel.text = nil
         artistNameLabel.text = nil
+//        lineView.backgroundColor = nil
     }
     
     //MARK: - Configure the view
@@ -76,12 +86,14 @@ class LibraryTableViewCell: UITableViewCell {
         contentView.addSubview(coverImageView)
         contentView.addSubview(trackNameLabel)
         contentView.addSubview(artistNameLabel)
+//        contentView.addSubview(lineView)
     }
     
     public func configureCell(with model: Track) {
         coverImageView.sd_setImage(with: URL(string: model.artworkUrl100), completed: nil)
         trackNameLabel.text = model.trackName
         artistNameLabel.text = model.artistName
+//        lineView.backgroundColor = .systemGray
     }
     
 }

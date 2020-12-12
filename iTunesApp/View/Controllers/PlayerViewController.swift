@@ -253,7 +253,7 @@ class PlayerViewController: UIViewController {
                 subview.removeFromSuperview()
             }
             setInitialUI()
-            loadTrack(trackUrl: tracks[numberOfTrack].previewUrl)
+            loadTrack(trackUrl: tracks[numberOfTrack - 1].previewUrl)
             player?.play()
             setPlayAndPauseButtonWhenHitBackwardOrForward()
         }

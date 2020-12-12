@@ -14,8 +14,21 @@ class LibraryViewController: UIViewController {
     private let tableView : UITableView = {
         let tableView = UITableView()
         tableView.register(LibraryTableViewCell.self, forCellReuseIdentifier: LibraryTableViewCell.identifier)
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.separatorStyle = .none
+        tableView.isHidden = true
+//        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         return tableView
+    }()
+    
+    private let noTracksLabel : UILabel = {
+        let label = UILabel()
+        label.text = "No Added Tracks Yet..."
+        label.font = .systemFont(ofSize: 20, weight: .semibold)
+        label.numberOfLines = 1
+        label.textColor = .label
+        label.textAlignment = .center
+        label.isHidden = true
+        return label
     }()
     
     //MARK: - Constants and Variables
@@ -40,6 +53,8 @@ class LibraryViewController: UIViewController {
         super.viewDidLayoutSubviews()
         //Frame of the tableView
         tableView.frame = view.bounds
+        //Frames of the NoTracks Label
+        noTracksLabel.frame = CGRect(x: 20, y: view.height / 2 - 20, width: view.width - 40, height: 30)
     }
 
     //MARK: - Functions
@@ -50,6 +65,14 @@ class LibraryViewController: UIViewController {
         view.backgroundColor = .systemBackground
         //Adding subviews
         view.addSubview(tableView)
+        view.addSubview(noTracksLabel)
+        if savedTracks.count == 0 {
+            tableView.isHidden = true
+            noTracksLabel.isHidden = false
+        } else {
+            tableView.isHidden = false
+            noTracksLabel.isHidden = true
+        }
         print(savedTracks.count)
     }
     
@@ -91,11 +114,41 @@ extension LibraryViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let model = savedTracks[indexPath.row]
+//        let position = indexPath.row
         tableView.deselectRow(at: indexPath, animated: true)
+        let vc = PlayerViewController()
+        vc.previewURL = model.previewUrl
+        vc.track = model
+        vc.tracks.append(model)
+        vc.numberOfTrack = model.trackNumber
+        print(model.trackNumber)
+        present(vc, animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return 55
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            //remove element from a specific index and then encode savedTracks array again, so when the user closes the app or goes to another page when they return back it would show 'em the array without the track they deleleted before
+            savedTracks.remove(at: indexPath.row)
+            do {
+                //Json Encoder
+                let encoder = JSONEncoder()
+                //Encode Tracks
+                let data = try encoder.encode(savedTracks)
+                //Write data to UserDefaults
+                UserDefaults.standard.setValue(data, forKey: "SavedTracks")
+            } catch {
+                print("Unable to encode, error: \(error)")
+            }
+            //Then reload data
+            DispatchQueue.main.async {
+                tableView.reloadData()
+            }
+        }
     }
     
 }

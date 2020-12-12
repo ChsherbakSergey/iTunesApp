@@ -71,6 +71,8 @@ class DetailAlbumViewController: UIViewController {
         view.addSubview(headerView)
         headerView.imageView.sd_setImage(with: URL(string: albumPicture), completed: nil)
         tableView.tableHeaderView = headerView
+        
+        getDataFromUserDefaults()
     }
     
     ///Sets Delegates
@@ -193,7 +195,7 @@ extension DetailAlbumViewController: ListOfSongsTableViewCellDelegate {
         } else {
             print("Added")
             let newTrack = tracks[numberOfTrack - 1]
-            arrayOfAddedTracks.append(newTrack)
+            arrayOfAddedTracks.insert(newTrack, at: 0)
             let array = arrayOfAddedTracks
             print(array.count)
             
@@ -208,11 +210,22 @@ extension DetailAlbumViewController: ListOfSongsTableViewCellDelegate {
                 print("Unable to encode, error: \(error)")
             }
             
-            
-            
-            
         }
 
+    }
+    
+    private func getDataFromUserDefaults() {
+        if let data = UserDefaults.standard.data(forKey: "SavedTracks") {
+            do {
+                //Create JSON Decoder
+                let decoder = JSONDecoder()
+                //Decode Data
+                let tracks = try decoder.decode([Track].self, from: data)
+                arrayOfAddedTracks = tracks
+            } catch {
+                print("Unable to decode, error: \(error)")
+            }
+        }
     }
     
 }

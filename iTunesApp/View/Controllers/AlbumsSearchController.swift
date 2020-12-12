@@ -58,7 +58,7 @@ class AlbumsSearchController: UIViewController {
         setInitialUI()
         //By default the app going to show Eminem's albums when it launches
         //Sort albums alphabetically and then delete all the elements that are the same because API does provide same elements several times sometimes
-        JSONHandler.shared.getAlbums(query: "50 cent", completion: { [weak self] albums in
+        JSONHandler.shared.getAlbums(query: "Lil baby", completion: { [weak self] albums in
             self?.albums = albums.sorted(by: {$0.collectionName < $1.collectionName})
             for (index, element) in albums.enumerated().reversed() {
                 if albums.filter({ $0 == element}).count > 1 {
@@ -172,7 +172,7 @@ extension AlbumsSearchController: UISearchBarDelegate {
             guard let searchText = searchBar.text else {
                 return
             }
-            JSONHandler.shared.getAlbums(query: searchText.lowercased(), completion: { [weak self] requestedAlbums in
+            JSONHandler.shared.getAlbums(query: searchText, completion: { [weak self] requestedAlbums in
                 guard let strongSelf = self else {
                     return
                 }
