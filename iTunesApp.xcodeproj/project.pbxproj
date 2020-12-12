@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		07AD90F7E5F6ABD8992DCF4A /* Pods_iTunesApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21948996DDBCE895E51FAF9A /* Pods_iTunesApp.framework */; };
 		A54C19112583BD8C0087A2CF /* ActionSheets.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C19102583BD8C0087A2CF /* ActionSheets.swift */; };
+		A54C41B2258503ED008681D8 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C41B1258503ED008681D8 /* Error.swift */; };
 		A54C7BF225827C7200831E1B /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C7BF125827C7200831E1B /* PlayerViewController.swift */; };
 		A54C7BFA2582D69400831E1B /* SavedTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C7BF92582D69400831E1B /* SavedTrack.swift */; };
 		A54C7BFE2582D73200831E1B /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C7BFD2582D73200831E1B /* LibraryViewController.swift */; };
@@ -35,6 +36,7 @@
 		21948996DDBCE895E51FAF9A /* Pods_iTunesApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iTunesApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6378AEC30FE3973DE7960091 /* Pods-iTunesApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iTunesApp.debug.xcconfig"; path = "Target Support Files/Pods-iTunesApp/Pods-iTunesApp.debug.xcconfig"; sourceTree = "<group>"; };
 		A54C19102583BD8C0087A2CF /* ActionSheets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheets.swift; sourceTree = "<group>"; };
+		A54C41B1258503ED008681D8 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		A54C7BF125827C7200831E1B /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		A54C7BF92582D69400831E1B /* SavedTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedTrack.swift; sourceTree = "<group>"; };
 		A54C7BFD2582D73200831E1B /* LibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
@@ -78,6 +80,32 @@
 				21948996DDBCE895E51FAF9A /* Pods_iTunesApp.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A54C41B425850919008681D8 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				A55877732581165F00A76CCF /* AppDelegate.swift */,
+				A55877752581165F00A76CCF /* SceneDelegate.swift */,
+			);
+			path = Delegates;
+			sourceTree = "<group>";
+		};
+		A54C41B525850929008681D8 /* Alerts */ = {
+			isa = PBXGroup;
+			children = (
+				A54C19102583BD8C0087A2CF /* ActionSheets.swift */,
+				A54C41B1258503ED008681D8 /* Error.swift */,
+			);
+			path = Alerts;
+			sourceTree = "<group>";
+		};
+		A54C41B625850940008681D8 /* Extentions */ = {
+			isa = PBXGroup;
+			children = (
+				A558778D258124CE00A76CCF /* Extensions.swift */,
+			);
+			path = Extentions;
 			sourceTree = "<group>";
 		};
 		A54C7C002582DA3400831E1B /* Browse */ = {
@@ -130,12 +158,11 @@
 		A55877882581236B00A76CCF /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A54C41B625850940008681D8 /* Extentions */,
+				A54C41B525850929008681D8 /* Alerts */,
+				A54C41B425850919008681D8 /* Delegates */,
 				A55877902581254200A76CCF /* JSON Handler */,
-				A55877732581165F00A76CCF /* AppDelegate.swift */,
-				A55877752581165F00A76CCF /* SceneDelegate.swift */,
 				A558777C2581166200A76CCF /* Assets.xcassets */,
-				A558778D258124CE00A76CCF /* Extensions.swift */,
-				A54C19102583BD8C0087A2CF /* ActionSheets.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -372,6 +399,7 @@
 				A55877A1258146CC00A76CCF /* AlbumsCollectionViewCell.swift in Sources */,
 				A54C19112583BD8C0087A2CF /* ActionSheets.swift in Sources */,
 				A55877B525816A8E00A76CCF /* AlbumInfoTableViewCell.swift in Sources */,
+				A54C41B2258503ED008681D8 /* Error.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

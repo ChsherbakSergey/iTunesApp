@@ -32,7 +32,7 @@ final class JSONHandler {
         }
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let data = data, error == nil else {
-                print("\(String(describing: error?.localizedDescription))")
+                print(ProjectError.networkingError(message: "Data is nil or error has occured while trying to get albums for url: \(url)"))
                 return
             }
             do {
@@ -61,7 +61,7 @@ final class JSONHandler {
                     completion(albums)
                 }
             } catch {
-                print(error.localizedDescription)
+                print(ProjectError.networkingError(message: "Networking error while triyng to get albums for url: \(url)"))
             }
         }.resume()
     }
@@ -79,7 +79,7 @@ final class JSONHandler {
         }
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let data = data, error == nil else {
-                print(error!.localizedDescription)
+                print(ProjectError.networkingError(message: "Data is nil or error has occured while trying to get songs for url: \(url)"))
                 return
             }
             do {
@@ -108,7 +108,7 @@ final class JSONHandler {
                     completion(tracks)
                 }
             } catch {
-                print(error.localizedDescription)
+                print(ProjectError.networkingError(message: "Networking error while triyng to get songs for url: \(url)"))
             }
         }.resume()
     }

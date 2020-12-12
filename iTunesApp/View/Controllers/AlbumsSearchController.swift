@@ -176,7 +176,7 @@ extension AlbumsSearchController: UISearchBarDelegate {
                 guard let strongSelf = self else {
                     return
                 }
-                print(requestedAlbums)
+//                print(requestedAlbums)
                 //Sort albums alphabetically and then delete all the elements that are the same because API does provide same elements several times sometimes
                 strongSelf.albums = requestedAlbums.sorted(by: {$0.collectionName < $1.collectionName})
                 for (index, element) in strongSelf.albums.enumerated().reversed() {
@@ -205,24 +205,29 @@ extension AlbumsSearchController: UISearchBarDelegate {
     //If the user clicks the cancel button we must show them what was on the screen before they started to search
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         if lastSearch == "" {
-            JSONHandler.shared.getAlbums(query: "zyan", completion: { [weak self] requestedAlbums in
-                guard let strrongSelf = self else {
+            JSONHandler.shared.getAlbums(query: "Lil baby", completion: { [weak self] requestedAlbums in
+                guard let strongSelf = self else {
                     return
                 }
-                strrongSelf.albums = requestedAlbums.sorted(by: {$0.collectionName < $1.collectionName})
+                strongSelf.albums = requestedAlbums.sorted(by: {$0.collectionName < $1.collectionName})
+                for (index, element) in strongSelf.albums.enumerated().reversed() {
+                    if strongSelf.albums.filter({ $0 == element}).count > 1 {
+                        strongSelf.albums.remove(at: index)
+                    }
+                }
                 DispatchQueue.main.async {
-                    strrongSelf.collectionView?.reloadData()
+                    strongSelf.collectionView?.reloadData()
                 }
             })
             searchBar.resignFirstResponder()
         } else {
             JSONHandler.shared.getAlbums(query: lastSearch, completion: { [weak self] requestedAlbums in
-                guard let strrongSelf = self else {
+                guard let strongSelf = self else {
                     return
                 }
-                strrongSelf.albums = requestedAlbums.sorted(by: {$0.collectionName < $1.collectionName})
+                strongSelf.albums = requestedAlbums.sorted(by: {$0.collectionName < $1.collectionName})
                 DispatchQueue.main.async {
-                    strrongSelf.collectionView?.reloadData()
+                    strongSelf.collectionView?.reloadData()
                 }
             })
             searchBar.resignFirstResponder()
