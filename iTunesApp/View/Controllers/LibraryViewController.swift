@@ -46,6 +46,7 @@ class LibraryViewController: UIViewController {
         super.viewWillAppear(animated)
         setInitialUI()
         getDataFromUserDefaults()
+        checkTheNumberOfSongsInSavedArray()
     }
     
     //Setting frames of the views
@@ -66,13 +67,6 @@ class LibraryViewController: UIViewController {
         //Adding subviews
         view.addSubview(tableView)
         view.addSubview(noTracksLabel)
-        if savedTracks.count == 0 {
-            tableView.isHidden = true
-            noTracksLabel.isHidden = false
-        } else {
-            tableView.isHidden = false
-            noTracksLabel.isHidden = true
-        }
         print(savedTracks.count)
     }
     
@@ -82,6 +76,18 @@ class LibraryViewController: UIViewController {
         tableView.dataSource = self
     }
     
+    ///Checks the quantity of the songs in the saved array and based on it shows the songs or "No songs are added" label
+    private func checkTheNumberOfSongsInSavedArray() {
+        if savedTracks.count == 0 {
+            tableView.isHidden = true
+            noTracksLabel.isHidden = false
+        } else {
+            tableView.isHidden = false
+            noTracksLabel.isHidden = true
+        }
+    }
+    
+    ///Gets the Tracks objects from user defaults by decoding it from data firstly
     private func getDataFromUserDefaults() {
         if let data = UserDefaults.standard.data(forKey: "SavedTracks") {
             do {
@@ -100,6 +106,7 @@ class LibraryViewController: UIViewController {
     }
 }
 
+//MARK: - UITableViewDelegate and UITableViewDataSource Implementation
 
 extension LibraryViewController: UITableViewDelegate, UITableViewDataSource {
     
@@ -145,8 +152,9 @@ extension LibraryViewController: UITableViewDelegate, UITableViewDataSource {
                 print("Unable to encode, error: \(error)")
             }
             //Then reload data
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
                 tableView.reloadData()
+                self?.checkTheNumberOfSongsInSavedArray()
             }
         }
     }

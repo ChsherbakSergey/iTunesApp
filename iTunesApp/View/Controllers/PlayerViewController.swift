@@ -104,7 +104,7 @@ class PlayerViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         //Frame of the coverImageView
-        coverImageView.frame = CGRect(x: 50, y: 20, width: view.width - 100, height: view.width - 100)
+//        coverImageView.frame = CGRect(x: 50, y: 20, width: view.width - 100, height: view.width - 100)
         coverImageView.layer.cornerRadius = 5
         //Frame of the albumNameLabel
         albumNameLabel.frame = CGRect(x: 20, y: coverImageView.bottom + 15, width: view.width - 40, height: 20)
@@ -152,6 +152,8 @@ class PlayerViewController: UIViewController {
             artistNameLabel.text = tracks[numberOfTrack - 1].artistName
             coverImageView.sd_setImage(with: URL(string: tracks[numberOfTrack - 1].artworkUrl100), completed: nil)
         }
+        //Frame of the coverImageView is set in vievDidLoad so later wo would be able to shrink it or increase the size of it
+        coverImageView.frame = CGRect(x: 50, y: 20, width: view.width - 100, height: view.width - 100)
     }
     
     ///Plays audio using provided url
@@ -236,11 +238,17 @@ class PlayerViewController: UIViewController {
             let image = UIImage(systemName: "play.fill", withConfiguration: configuration)
             playAndPauseButton.setImage(image, for: .normal)
             //shrink cover image
+            UIView.animate(withDuration: 0.2, animations: {
+                self.coverImageView.frame = CGRect(x: 75, y: 70, width: self.view.width - 150, height: self.view.width - 150)
+            })
         } else {
             player?.play()
             isPaused = false
             setPlayAndPauseButtonWhenHitBackwardOrForward()
             //increase image size
+            UIView.animate(withDuration: 0.2, animations: {
+                self.coverImageView.frame = CGRect(x: 50, y: 20, width: self.view.width - 100, height: self.view.width - 100)
+            })
         }
     }
     
