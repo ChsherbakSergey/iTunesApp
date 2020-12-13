@@ -9,7 +9,7 @@ import UIKit
 import SDWebImage
 import SafariServices
 
-class DetailAlbumViewController: UIViewController {
+final class DetailAlbumViewController: UIViewController {
 
     //MARK: - Views that will be displayed on this view
     private let tableView : UITableView = {
@@ -117,7 +117,7 @@ extension DetailAlbumViewController: UITableViewDelegate, UITableViewDataSource 
         tableView.deselectRow(at: indexPath, animated: true)
         let model = tracks
         let position = indexPath.row - 1
-        //Presenting VC
+        //Presenting Player VC
         if indexPath.row == 0 {
             return
         } else if indexPath.row == tracks.count + 1 {
@@ -198,7 +198,7 @@ extension DetailAlbumViewController: ListOfSongsTableViewCellDelegate {
             arrayOfAddedTracks.insert(newTrack, at: 0)
             let array = arrayOfAddedTracks
             print(array.count)
-            
+            //To save custom object into UserDefaults we must firstly encode it and then save
             do {
                 //Json Encoder
                 let encoder = JSONEncoder()
@@ -207,15 +207,15 @@ extension DetailAlbumViewController: ListOfSongsTableViewCellDelegate {
                 //Write data to UserDefaults
                 UserDefaults.standard.setValue(data, forKey: "SavedTracks")
             } catch {
-                print("Unable to encode, error: \(error)")
+                print(ProjectError.encodeError(message: "Unable to encode, error: \(error)"))
             }
-            
         }
-
     }
+    
     
     private func getDataFromUserDefaults() {
         if let data = UserDefaults.standard.data(forKey: "SavedTracks") {
+            //To retrieve data from UserDefualts we must firstly decode that
             do {
                 //Create JSON Decoder
                 let decoder = JSONDecoder()
@@ -223,7 +223,7 @@ extension DetailAlbumViewController: ListOfSongsTableViewCellDelegate {
                 let tracks = try decoder.decode([Track].self, from: data)
                 arrayOfAddedTracks = tracks
             } catch {
-                print("Unable to decode, error: \(error)")
+                print(ProjectError.decodeError(message: "Unable to decode, error: \(error)"))
             }
         }
     }

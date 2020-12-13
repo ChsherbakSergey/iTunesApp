@@ -13,7 +13,7 @@ protocol AlbumInfoTableViewCellDelegate: AnyObject {
     func didTapArtistNameButton()
 }
 
-class AlbumInfoTableViewCell: UITableViewCell {
+final class AlbumInfoTableViewCell: UITableViewCell {
     
     //Identifier to use when register a cell
     static let identifier = "AlbumInfoTableViewCell"
@@ -85,6 +85,7 @@ class AlbumInfoTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //Setting frames of the views
     override func layoutSubviews() {
         super.layoutSubviews()
         //Frame of the albumNameLabel
@@ -124,6 +125,7 @@ class AlbumInfoTableViewCell: UITableViewCell {
         contentView.addSubview(lineView)
     }
     
+    ///Configures the view of the cell
     public func configureCell(collectionName: String, artistName: String, genreAndYear: String) {
         albumNameLabel.text = collectionName
         artistNameButton.setTitle(artistName, for: .normal)
@@ -138,14 +140,17 @@ class AlbumInfoTableViewCell: UITableViewCell {
         artistNameButton.addTarget(self, action: #selector(didTapArtistNameButton), for: .touchUpInside)
     }
     
+    ///Delegates when the Play Button is Tapped
     @objc private func didTapPlayButton() {
         delegate?.didTapPlayMusicButton()
     }
     
+    ///Delegates when the Shuffle Button  is Tapped
     @objc private func didTapShuffleButton() {
         delegate?.didTapShuffleButton()
     }
     
+    ///Delegates when the Artist Name Label is Tapped
     @objc private func didTapArtistNameButton() {
         delegate?.didTapArtistNameButton()
     }

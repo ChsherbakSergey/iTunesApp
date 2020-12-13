@@ -7,6 +7,7 @@
 
 import UIKit
 
+//Presents a model for settings tableview cells
 struct Settings {
     let title: String
     let iconImage: UIImage?

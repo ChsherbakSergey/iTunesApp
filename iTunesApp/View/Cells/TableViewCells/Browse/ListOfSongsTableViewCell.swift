@@ -11,7 +11,7 @@ protocol ListOfSongsTableViewCellDelegate: AnyObject {
     func didTapAddTrack(addedAlready: Bool, numberOfTrack: Int)
 }
 
-class ListOfSongsTableViewCell: UITableViewCell {
+final class ListOfSongsTableViewCell: UITableViewCell {
     
     //Identifier to use when register a cell
     static let identifier = "ListOfSongsTableViewCell"
@@ -62,6 +62,7 @@ class ListOfSongsTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //Setting the frame of the views
     override func layoutSubviews() {
         super.layoutSubviews()
         songNumberLabel.frame = CGRect(x: 20, y: 0, width: 30, height: contentView.height - 1)
@@ -80,6 +81,7 @@ class ListOfSongsTableViewCell: UITableViewCell {
     
     //MARK: - Configure View
     
+    ///Configures Initial UI
     private func setInitialUI() {
         contentView.addSubview(songNameLabel)
         contentView.addSubview(songNumberLabel)
@@ -87,6 +89,7 @@ class ListOfSongsTableViewCell: UITableViewCell {
         contentView.addSubview(addButton)
     }
     
+    ///Configures the view of the cell
     public func configureCell(with model: Track, numberOfSong: Int) {
         songNameLabel.text = model.trackName
         songNumberLabel.text = String(numberOfSong)
@@ -99,6 +102,7 @@ class ListOfSongsTableViewCell: UITableViewCell {
         addButton.addTarget(self, action: #selector(didTapAddButton), for: .touchUpInside)
     }
     
+    ///Changes the image of the addButton to checkmark or to initial state if the user deleted the track
     @objc private func didTapAddButton() {
         if let buttonImage = addButton.image(for: .normal),
            let image = UIImage(systemName: "checkmark"),
@@ -110,7 +114,6 @@ class ListOfSongsTableViewCell: UITableViewCell {
             addButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
             isAddedTrack = true
         }
-        
         delegate?.didTapAddTrack(addedAlready: isAddedTrack, numberOfTrack: numberOfTrack)
     }
     

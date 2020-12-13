@@ -10,4 +10,6 @@ import Foundation
 enum ProjectError : Error {
     case networkingError(message: String)
     case guardElse(message: String)
+    case encodeError(message: String)
+    case decodeError(message: String)
 }

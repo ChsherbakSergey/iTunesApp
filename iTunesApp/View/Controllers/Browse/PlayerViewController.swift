@@ -8,7 +8,7 @@
 import UIKit
 import AVFoundation
 
-class PlayerViewController: UIViewController {
+final class PlayerViewController: UIViewController {
     
     //MARK: - Views that will be displayed on this controller
     private let coverImageView : UIImageView = {
@@ -104,7 +104,6 @@ class PlayerViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         //Frame of the coverImageView
-//        coverImageView.frame = CGRect(x: 50, y: 20, width: view.width - 100, height: view.width - 100)
         coverImageView.layer.cornerRadius = 5
         //Frame of the albumNameLabel
         albumNameLabel.frame = CGRect(x: 20, y: coverImageView.bottom + 15, width: view.width - 40, height: 20)

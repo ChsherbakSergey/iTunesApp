@@ -7,8 +7,9 @@
 
 import UIKit
 
-class SettingsTableViewCell: UITableViewCell {
+final class SettingsTableViewCell: UITableViewCell {
 
+    //Identifier to use when register a cell
     static let identifier = "SettingsTableViewCell"
     
     //MARK: - Views that will be displayed on this cell
@@ -46,6 +47,7 @@ class SettingsTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //Setting frames of the views
     override func layoutSubviews() {
         super.layoutSubviews()
         //Frame of the iconContainer

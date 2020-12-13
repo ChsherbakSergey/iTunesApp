@@ -8,7 +8,7 @@
 import UIKit
 import SDWebImage
 
-class LibraryViewController: UIViewController {
+final class LibraryViewController: UIViewController {
 
     //MARK: - Views that will be displayed on this controller
     private let tableView : UITableView = {
@@ -16,7 +16,6 @@ class LibraryViewController: UIViewController {
         tableView.register(LibraryTableViewCell.self, forCellReuseIdentifier: LibraryTableViewCell.identifier)
         tableView.separatorStyle = .none
         tableView.isHidden = true
-//        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         return tableView
     }()
     
@@ -97,7 +96,7 @@ class LibraryViewController: UIViewController {
                 let tracks = try decoder.decode([Track].self, from: data)
                 savedTracks = tracks
             } catch {
-                print("Unable to decode, error: \(error)")
+                print(ProjectError.decodeError(message: "Unable to decode, error: \(error)"))
             }
         }
         DispatchQueue.main.async { [weak self] in
@@ -122,7 +121,6 @@ extension LibraryViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = savedTracks[indexPath.row]
-//        let position = indexPath.row
         tableView.deselectRow(at: indexPath, animated: true)
         let vc = PlayerViewController()
         vc.previewURL = model.previewUrl
@@ -149,7 +147,7 @@ extension LibraryViewController: UITableViewDelegate, UITableViewDataSource {
                 //Write data to UserDefaults
                 UserDefaults.standard.setValue(data, forKey: "SavedTracks")
             } catch {
-                print("Unable to encode, error: \(error)")
+                print(ProjectError.encodeError(message: "Unable to encode, error: \(error)"))
             }
             //Then reload data
             DispatchQueue.main.async { [weak self] in

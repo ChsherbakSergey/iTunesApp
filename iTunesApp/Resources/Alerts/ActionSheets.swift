@@ -8,8 +8,7 @@
 import Foundation
 import UIKit
 
-class ActionSheets {
-    
+final class ActionSheets {
     
     //MARK: - Public functions
     
@@ -26,6 +25,5 @@ class ActionSheets {
         }
     }
 
-    
 }
 

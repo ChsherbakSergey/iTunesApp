@@ -8,7 +8,7 @@
 import UIKit
 import SDWebImage
 
-class AlbumsCollectionViewCell: UICollectionViewCell {
+final class AlbumsCollectionViewCell: UICollectionViewCell {
     
     //Identifier to use when register cell
     static let identifier = "AlbumsCollectionViewCell"
@@ -46,6 +46,7 @@ class AlbumsCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //Setting frrames of the views
     override func layoutSubviews() {
         super.layoutSubviews()
         imageView.frame = CGRect(x: 10, y: 10, width: contentView.width - 20, height: contentView.width - 20)
@@ -63,6 +64,7 @@ class AlbumsCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Configure View
     
+    ///Configures Initial UI
     private func setInitialUI() {
         backgroundColor = .systemBackground
         contentView.clipsToBounds = true
@@ -73,6 +75,7 @@ class AlbumsCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(artistNamelabel)
     }
     
+    ///Configures the view of the cell
     public func configureCell(with model: Album) {
         albumNamelabel.text = model.collectionName
         artistNamelabel.text = model.artistName

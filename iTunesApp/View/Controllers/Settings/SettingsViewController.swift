@@ -7,13 +7,12 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController {
+final class SettingsViewController: UIViewController {
 
     //MARK: - Views that will be displayed on this controller
     
     private let tableView : UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
-//        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.register(SettingsTableViewCell.self, forCellReuseIdentifier: SettingsTableViewCell.identifier)
         return tableView
     }()

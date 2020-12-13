@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+final class ProfileViewController: UIViewController {
     
     //MARK: - Views that will be displayed on this controller
     private let tableView : UITableView = {

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TrackCopyrightTableViewCell: UITableViewCell {
+final class TrackCopyrightTableViewCell: UITableViewCell {
 
     //Identifier to use when register a cell
     static let identifier = "TrackCopyrightTableViewCell"
@@ -47,6 +47,7 @@ class TrackCopyrightTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //Setting frames of the views
     override func layoutSubviews() {
         super.layoutSubviews()
         numberOfSongsLabel.frame = CGRect(x: 20, y: 5, width: contentView.width - 40, height: 20)
@@ -71,6 +72,7 @@ class TrackCopyrightTableViewCell: UITableViewCell {
         contentView.addSubview(lineView)
     }
     
+    //Configures the view of the cell
     public func configureCell(with copyright: String, numberOfTracks: Int) {
         numberOfSongsLabel.text = String(numberOfTracks) + " songs"
         copyrightLabel.text = copyright

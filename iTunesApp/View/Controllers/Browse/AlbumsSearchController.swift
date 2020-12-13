@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AlbumsSearchController: UIViewController {
+final class AlbumsSearchController: UIViewController {
     
     //MARK: - Views that will be displayed on this controller
     private var collectionView : UICollectionView?
@@ -47,8 +47,6 @@ class AlbumsSearchController: UIViewController {
     //MARK: - Constants and Variables
     var albums : [Album] = []
     var lastSearch = ""
-//    var filteredAlbums : [Album] = []
-//    var isFiltered = false
 
     //MARK: - Life Cycle
     override func viewDidLoad() {
@@ -176,7 +174,6 @@ extension AlbumsSearchController: UISearchBarDelegate {
                 guard let strongSelf = self else {
                     return
                 }
-//                print(requestedAlbums)
                 //Sort albums alphabetically and then delete all the elements that are the same because API does provide same elements several times sometimes
                 strongSelf.albums = requestedAlbums.sorted(by: {$0.collectionName < $1.collectionName})
                 for (index, element) in strongSelf.albums.enumerated().reversed() {

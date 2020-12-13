@@ -7,6 +7,7 @@
 
 import Foundation
 
+//Presents Albums objects
 struct Album: Comparable {
     
     let artistName: String

@@ -7,6 +7,7 @@
 
 import Foundation
 
+//Presents Track objects
 struct Track : Codable {
     
     let trackName: String

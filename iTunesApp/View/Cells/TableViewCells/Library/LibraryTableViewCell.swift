@@ -8,7 +8,7 @@
 import UIKit
 import SDWebImage
 
-class LibraryTableViewCell: UITableViewCell {
+final class LibraryTableViewCell: UITableViewCell {
 
     //Identifier to use when register a cell
     static let identifier = "LibraryTableViewCell"
@@ -40,12 +40,6 @@ class LibraryTableViewCell: UITableViewCell {
         return label
     }()
     
-//    private let lineView : UIView = {
-//        let view = UIView()
-//        view.backgroundColor = .systemGray
-//        return view
-//    }()
-    
     //MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -66,8 +60,6 @@ class LibraryTableViewCell: UITableViewCell {
         trackNameLabel.frame = CGRect(x: coverImageView.right + 5, y: 0, width: contentView.width - 71, height: contentView.height / 2)
         //Frame of the artistName Label
         artistNameLabel.frame = CGRect(x: coverImageView.right + 5, y: contentView.height / 2, width: contentView.width - 71, height: contentView.height / 2)
-        //Frame of the line
-//        lineView.frame = CGRect(x: 0, y: contentView.bottom - 0.25, width: contentView.width, height: 0.25)
     }
     
     override func prepareForReuse() {
@@ -75,7 +67,6 @@ class LibraryTableViewCell: UITableViewCell {
         coverImageView.image = nil
         trackNameLabel.text = nil
         artistNameLabel.text = nil
-//        lineView.backgroundColor = nil
     }
     
     //MARK: - Configure the view
@@ -86,14 +77,12 @@ class LibraryTableViewCell: UITableViewCell {
         contentView.addSubview(coverImageView)
         contentView.addSubview(trackNameLabel)
         contentView.addSubview(artistNameLabel)
-//        contentView.addSubview(lineView)
     }
     
     public func configureCell(with model: Track) {
         coverImageView.sd_setImage(with: URL(string: model.artworkUrl100), completed: nil)
         trackNameLabel.text = model.trackName
         artistNameLabel.text = model.artistName
-//        lineView.backgroundColor = .systemGray
     }
     
 }

@@ -14,7 +14,6 @@
 		A54C41C22585342D008681D8 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C41C12585342D008681D8 /* Settings.swift */; };
 		A54C41C62585360D008681D8 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C41C52585360D008681D8 /* SettingsTableViewCell.swift */; };
 		A54C7BF225827C7200831E1B /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C7BF125827C7200831E1B /* PlayerViewController.swift */; };
-		A54C7BFA2582D69400831E1B /* SavedTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C7BF92582D69400831E1B /* SavedTrack.swift */; };
 		A54C7BFE2582D73200831E1B /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C7BFD2582D73200831E1B /* LibraryViewController.swift */; };
 		A54C7C062582DA6100831E1B /* LibraryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C7C052582DA6100831E1B /* LibraryTableViewCell.swift */; };
 		A55877742581165F00A76CCF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55877732581165F00A76CCF /* AppDelegate.swift */; };
@@ -45,7 +44,6 @@
 		A54C41C12585342D008681D8 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		A54C41C52585360D008681D8 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		A54C7BF125827C7200831E1B /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
-		A54C7BF92582D69400831E1B /* SavedTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedTrack.swift; sourceTree = "<group>"; };
 		A54C7BFD2582D73200831E1B /* LibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
 		A54C7C052582DA6100831E1B /* LibraryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryTableViewCell.swift; sourceTree = "<group>"; };
 		A55877702581165F00A76CCF /* iTunesApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTunesApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -213,7 +211,6 @@
 		A55877892581238600A76CCF /* View */ = {
 			isa = PBXGroup;
 			children = (
-				A55877BA258182A300A76CCF /* Footers */,
 				A55877AE2581679D00A76CCF /* Headers */,
 				A558779F258146B500A76CCF /* Cells */,
 				A558778B258123A200A76CCF /* Controllers */,
@@ -254,7 +251,6 @@
 			children = (
 				A558779A25813A2E00A76CCF /* Album.swift */,
 				A55877AB25815EBF00A76CCF /* Track.swift */,
-				A54C7BF92582D69400831E1B /* SavedTrack.swift */,
 				A54C41C12585342D008681D8 /* Settings.swift */,
 			);
 			path = Models;
@@ -293,13 +289,6 @@
 				A54C7C002582DA3400831E1B /* Browse */,
 			);
 			path = TableViewCells;
-			sourceTree = "<group>";
-		};
-		A55877BA258182A300A76CCF /* Footers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Footers;
 			sourceTree = "<group>";
 		};
 		B90DB722451620AD11BA1EFE /* Pods */ = {
@@ -441,7 +430,6 @@
 				A54C7BFE2582D73200831E1B /* LibraryViewController.swift in Sources */,
 				A558778E258124CE00A76CCF /* Extensions.swift in Sources */,
 				A563A56125855814003D36DF /* ProfileViewController.swift in Sources */,
-				A54C7BFA2582D69400831E1B /* SavedTrack.swift in Sources */,
 				A55877BC2581833B00A76CCF /* TrackCopyrightTableViewCell.swift in Sources */,
 				A55877A1258146CC00A76CCF /* AlbumsCollectionViewCell.swift in Sources */,
 				A54C19112583BD8C0087A2CF /* ActionSheets.swift in Sources */,
